@@ -17,7 +17,8 @@
   justify-content: center;
   align-items: center;
   height: auto;
-  font-size: 16px;
+  font-size: 15px;
+            line-height: 2;
 
 }
 
@@ -37,10 +38,10 @@
 
         .recordrtc button, .recordrtc select {
             vertical-align: middle;
-            line-height: 1.5;
+            line-height: 1;
             padding: 2px 5px;
             height: auto;
-            font-size: inherit;
+            font-size: 12px;
             margin: 0;
         }
 
@@ -67,18 +68,40 @@
             font-size: 17px;
         }
 
-	.button buttonmy {
-  background-color: #4CAF50; /* Green */
+	.buttons {
+  background-color: red; /* Green */
   border: none;
   color: white;
-  padding: 15px 32px;
+  padding: 10px 20px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
   font-size: 16px;
   margin: 4px 2px;
   cursor: pointer;
+border-radius: 8px;
 }
+
+	.buttons3 {
+  background-color: red; /* Green */
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+border-radius: 8px;
+}
+
+.buttons3:disabled{
+background-color:white;
+color:white;
+border: none;
+}
+
     </style>
 
 <br>
@@ -96,28 +119,33 @@
 	</div>
 
         <section >
-
-	    <br>
             <div class="center">
                 Before starting, let's turn on your camera and make sure we can see your baby:
-<br><br>
+<br>
             </div>
 
             <div class="center">
 
 
-                <button id="btn-start-recording">Start camera</button>
-                <button id="btn-stop-recording" disabled>Stop camera</button>
+                <button class="buttons" id="btn-start-recording">Start video</button>
+                <button class="buttons" id="btn-pause" disabled>Pause</button>
+
+                <button class="buttons" id="btn-stop-recording" disabled>Stop video</button>
 
 <br>
             </div>
 
-	    <div>
-		<video style="width: 96%; height: 54%;" controls autoplay playsinline></video>
+	    <div class = "center">
+		<video id="webvid" style="width: 70%;" controls autoplay playsinline></video>
 		<br>
 	    </div>
 
+<div class="center">
 
+<button class="buttons" id="play" disabled>When you're ready, click here to begin!</button>
+
+<hr style="border-top: 0;border-bottom: 0px solid rgb(189, 189, 189);margin: 4px 4px;margin-top: 1px;">
+</div>
 
 	    <br>
             <div class="center">
@@ -127,24 +155,16 @@
 
 
 <div class="center">
-<video poster="demo.png" id="myvideo" style="width: 80%;"> <source src='Cecile.mp4'></video>
+<video poster="demo.png" id="myvideo" style="width: 60%;"> <source src='Cecile.mp4'></video>
 </div>
 <br>
 
-<div class="center">
 
-<button id="play" disabled>When you're ready, click here to begin!</button>
-<br>
-<hr style="border-top: 0;border-bottom: 0px solid rgb(189, 189, 189);margin: 4px 4px;margin-top: 1px;">
-<br>
-<br>
-<br>
-            </div>
 
 
             <div class="center">
 <br>
-                <button id="btn-save-recording"disabled>Download Study Video</button>
+                <button class="buttons" id="btn-save-recording"disabled>Save video</button>
    
             </div>
 <br>
@@ -192,11 +212,26 @@ function stopRecordingCallback() {
 }
 
 var recorder; // globally accessible
+var started = 0;
 
 document.getElementById('btn-start-recording').onclick = function() {
     this.disabled = true;
     document.getElementById('btn-save-recording').disabled = true;
+document.getElementById('btn-pause').disabled = false;
     document.getElementById('btn-stop-recording').disabled = false;
+
+	if (pause===1) {
+		pause = 0;
+		document.querySelector("#webvid").play();
+		if (started==1) {
+			document.querySelector("#myvideo").play();
+			var elem = document.getElementById("myvideo"); 
+	    		openFullscreen(elem);
+		}
+		
+	}
+
+	else {
 
     captureCamera(function(camera) {
         video.muted = true;
@@ -215,8 +250,10 @@ document.getElementById('btn-start-recording').onclick = function() {
 
 	document.getElementById('play').disabled = false;
     });
+  }
 
 };
+
 
     
 function openFullscreen(elem) {
@@ -226,13 +263,13 @@ function openFullscreen(elem) {
     				elem.webkitRequestFullscreen();
   			} else if (elem.msRequestFullscreen) { /* IE11 */
     				elem.msRequestFullscreen();
+  			}		
 			
 };
 
 document.querySelector("#play").addEventListener("click", () => {
-
-
 	    document.querySelector("#myvideo").play();
+	    started = 1;
 	    var elem = document.getElementById("myvideo"); 
 			
 	    openFullscreen(elem);
@@ -245,6 +282,12 @@ document.querySelector("#play").addEventListener("click", () => {
 document.getElementById('btn-stop-recording').onclick = function() {
     this.disabled = true;
     document.getElementById('btn-save-recording').disabled = false;
+    document.getElementById('btn-start-recording').disabled = false;
+    document.getElementById('btn-pause').disabled = true;
+
+
+document.querySelector("#myvideo").pause();
+
 document.getElementById('play').disabled = true;
 
     recorder.stopRecording(stopRecordingCallback);
@@ -253,12 +296,20 @@ document.getElementById('play').disabled = true;
 document.getElementById('btn-save-recording').onclick = function() {
     
 
-   invokeSaveAsDialog(blob, 'test2.webm');
+   invokeSaveAsDialog(blob, 'test2.mp4');
  
 
 };
+var pause = 0;
 
-
+document.getElementById('btn-pause').onclick = function() {
+    this.disabled = true;
+    document.getElementById('btn-stop-recording').disabled = false;
+    document.getElementById('btn-start-recording').disabled = false;
+document.querySelector("#myvideo").pause();
+document.querySelector("#webvid").pause();
+pause = 1;
+};
 
 
 </script>
