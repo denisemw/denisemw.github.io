@@ -12,6 +12,14 @@
             width: 8em;
         }
 
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: auto;
+  font-size: 16px;
+
+}
 
         h1 span {
             background: yellow;
@@ -58,6 +66,19 @@
         .recordrtc select {
             font-size: 17px;
         }
+
+	.button buttonmy {
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
     </style>
 
 <br>
@@ -74,48 +95,60 @@
 		style="max-width: 80%; display: block; margin-left: auto; margin-right:auto;">
 	</div>
 
-        <section class="experiment recordrtc">
+        <section >
 
+	    <br>
+            <div class="center">
+                Before starting, let's turn on your camera and make sure we can see your baby:
+<br><br>
+            </div>
+
+            <div class="center">
+
+
+                <button id="btn-start-recording">Start camera</button>
+                <button id="btn-stop-recording" disabled>Stop camera</button>
+
+<br>
+            </div>
 
 	    <div>
 		<video style="width: 96%; height: 54%;" controls autoplay playsinline></video>
 		<br>
 	    </div>
 
-            <div>
 
-		<h3 class="header" style="margin: 0;">
-
-                <button id="btn-start-recording">Start Camera</button>
-                <button id="btn-stop-recording" disabled>Stop Camera</button>
-
-		<hr style="border-top: 0;border-bottom: 0px solid rgb(189, 189, 189);margin: 4px 4px;margin-top: 1px;">
-
-            </h3>
-            </div>
 
 	    <br>
+            <div class="center">
+                Only your baby's face should be in the video, like this: 
+            </div>
 
 
-<h2 class="header" style="margin: 0;">
 
-<button id="play" disabled>Please click here to begin the study!</button>
+<div class="center">
+<video poster="demo.png" id="myvideo" style="width: 80%;"> <source src='Cecile.mp4'></video>
+</div>
+<br>
+
+<div class="center">
+
+<button id="play" disabled>When you're ready, click here to begin!</button>
 <br>
 <hr style="border-top: 0;border-bottom: 0px solid rgb(189, 189, 189);margin: 4px 4px;margin-top: 1px;">
 <br>
-            </h2>
+<br>
+<br>
+            </div>
 
+
+            <div class="center">
 <br>
-<br>
-<video id="myvideo" style="width: 0%;"> <source src='Cecile.mp4'></video>
-<br>
-<br>
-            <div style="text-align: center; display: block;">
-                <button style="width: 33%; " id="btn-save-recording"disabled>Download Study Video</button>
+                <button id="btn-save-recording"disabled>Download Study Video</button>
    
             </div>
-<br><br>
-	</section/
+<br>
+	</section>
 
 
 
@@ -155,12 +188,15 @@ function stopRecordingCallback() {
     recorder = null;
 
     document.getElementById('btn-save-recording').disabled = false;
+    document.getElementById('btn-start-recording').disabled = false;
 }
 
 var recorder; // globally accessible
 
 document.getElementById('btn-start-recording').onclick = function() {
     this.disabled = true;
+    document.getElementById('btn-save-recording').disabled = true;
+    document.getElementById('btn-stop-recording').disabled = false;
 
     captureCamera(function(camera) {
         video.muted = true;
@@ -181,6 +217,7 @@ document.getElementById('btn-start-recording').onclick = function() {
     });
 
 };
+
     
 function openFullscreen(elem) {
   			if (elem.requestFullscreen) {
@@ -189,20 +226,23 @@ function openFullscreen(elem) {
     				elem.webkitRequestFullscreen();
   			} else if (elem.msRequestFullscreen) { /* IE11 */
     				elem.msRequestFullscreen();
-  			}			
+  			}		
+	document.getElementById("btn-stop-recording").click();
+	document.getElementById("btn-start-recording").click();	
 			
-			
-	    	}
+};
 
 document.querySelector("#play").addEventListener("click", () => {
-        document.getElementById('btn-stop-recording').disabled = false;
-	    		document.querySelector("#myvideo").play();
-	    		var elem = document.getElementById("myvideo"); 
-	    		openFullscreen(elem);
-		
+
+
+	    document.querySelector("#myvideo").play();
+	    var elem = document.getElementById("myvideo"); 
+			
+	    openFullscreen(elem);
+	
 	    		/* When the openFullscreen() function is executed, open the video in fullscreen.
             		Note that we must include prefixes for different browsers, as they don't support the requestFullscreen method yet */
-	   	});
+});
 
 
 document.getElementById('btn-stop-recording').onclick = function() {
