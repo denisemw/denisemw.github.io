@@ -51,7 +51,7 @@
                         <li><a href="https://pubmed.ncbi.nlm.nih.gov/36070130/"><button>Validation paper</button></a></li>
                     </ul>
                     <h3>Mac OSx App</h3>
-					    <p>I developed a beta version of a MacOSx App to better support users who are unfamiliar with using Python virtual environments. This application is currently only available for Intel-based Macs. To request a link to download the app, please fill out the form below.
+					    <p>I developed a beta version of a MacOSx App to better support users who are unfamiliar with using Python virtual environments. To request a password to download the app, please fill out the form below.
                             <form method="POST" action="https://formspree.io/f/mwkgooza">
                                 <div class="fields">
                                     <div class="field half">
@@ -76,6 +76,7 @@
                                     <li><input type="submit" value="Submit" class="primary" /></li>
                                 </ul>
                             </form>
+                            <li><button onClick="passwd()">Download App</button></li>
                             <footer id="footer2">
                                 <!-- <div class="logo">
                                     <span class="icon fa-brain"></span>
@@ -105,6 +106,17 @@
 			<div id="bg"></div>
 
 		<!-- Scripts -->
+        <script>
+            function passwd(){
+
+                var password = prompt('Enter the password to download the file:');
+                if(password.toLowerCase() == "babybrains"){
+                    window.open("https://www.dropbox.com/scl/fo/jdigp0quevgze8jxq6ms2/h?rlkey=wzc4oh4hdbswvvbo1pftkzfb6&dl=0")    
+                }else{
+                    alert("incorrect password!! please try again");
+                }
+                }
+        </script>
 			<script src="assets/js/jquery.min.js"></script>
 			<script src="assets/js/browser.min.js"></script>
 			<script src="assets/js/breakpoints.min.js"></script>
