@@ -76,7 +76,11 @@
                                     <li><input type="submit" value="Submit" class="primary" /></li>
                                 </ul>
                             </form>
-                            <li><button onClick="passwd()">Download App</button></li>
+                            <h3>Download App</h3>
+                            <ul class="actions">
+                                <li><button onClick="passwd_intel()">Intel-based Mac</button></li>
+                                <li><button onClick="passwd_silicon()">Silicon Mac</button></li>
+                            </ul>
                             <footer id="footer2">
                                 <!-- <div class="logo">
                                     <span class="icon fa-brain"></span>
@@ -107,15 +111,24 @@
 
 		<!-- Scripts -->
         <script>
-            function passwd(){
+            function passwd_silicon(){
 
                 var password = prompt('Enter the password to download the file:');
                 if(password.toLowerCase() == "babybrains"){
-                    window.open("https://www.dropbox.com/scl/fo/0ho9xnjqb9vowjkk75cxe/h?rlkey=rq1yjiopps0pe9txr2hjlz2iy&dl=0")    
+                    window.open("https://www.dropbox.com/scl/fo/jdigp0quevgze8jxq6ms2/h?rlkey=wzc4oh4hdbswvvbo1pftkzfb6&dl=1")    
                 }else{
                     alert("incorrect password!! please try again");
                 }
+            }
+            function passwd_intel(){
+
+                var password = prompt('Enter the password to download the file:');
+                if(password.toLowerCase() == "babybrains"){
+                    window.open("https://www.dropbox.com/scl/fo/4tul61bw7ga58m529wys1/h?rlkey=ms8e2mhzz9rvm1skben7ov8n7&dl=1")    
+                }else{
+                    alert("incorrect password!! please try again");
                 }
+            }
         </script>
 			<script src="assets/js/jquery.min.js"></script>
 			<script src="assets/js/browser.min.js"></script>
